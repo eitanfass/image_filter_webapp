@@ -352,3 +352,4 @@ if app_mode == 'Segment an Image':
     # # Display the result on the right (main frame)
     # st.subheader('Output Image')
     # st.image(segmented_image, use_column_width=True)
+
