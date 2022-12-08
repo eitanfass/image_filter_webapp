@@ -7,7 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1W9FXhpp1hMvptEYL81sVkn02-OslujTB
 """
 
-!pip install streamlit
 # import libs
 import streamlit as st
 #import matplotlib.pyplot as plt
@@ -324,32 +323,32 @@ if app_mode == 'Segment an Image':
 
 
 
-    
 
-    # choosing a k value (either with +- or with a slider)
-    k_value = st.sidebar.number_input('Insert K value (number of clusters):', value=4, min_value = 1) # asks for input from the user
-    st.sidebar.markdown('---') # adds a devider (a line)
-    
-    attempts_value_slider = st.sidebar.slider('Number of attempts', value = 7, min_value = 1, max_value = 10) # slider example
-    st.sidebar.markdown('---') # adds a devider (a line)
-    
-    # read an image from the user
-    img_file_buffer = st.sidebar.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
 
-    # assign the uplodaed image from the buffer, by reading it in
-    if img_file_buffer is not None:
-        image = io.imread(img_file_buffer)
-    else: # if no image was uploaded, then segment the demo image
-        demo_image = DEMO_IMAGE
-        image = io.imread(demo_image)
+    # # choosing a k value (either with +- or with a slider)
+    # k_value = st.sidebar.number_input('Insert K value (number of clusters):', value=4, min_value = 1) # asks for input from the user
+    # st.sidebar.markdown('---') # adds a devider (a line)
+    
+    # attempts_value_slider = st.sidebar.slider('Number of attempts', value = 7, min_value = 1, max_value = 10) # slider example
+    # st.sidebar.markdown('---') # adds a devider (a line)
+    
+    # # read an image from the user
+    # img_file_buffer = st.sidebar.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
 
-    # display on the sidebar the uploaded image
-    st.sidebar.text('Original Image')
-    st.sidebar.image(image)
+    # # assign the uplodaed image from the buffer, by reading it in
+    # if img_file_buffer is not None:
+    #     image = io.imread(img_file_buffer)
+    # else: # if no image was uploaded, then segment the demo image
+    #     demo_image = DEMO_IMAGE
+    #     image = io.imread(demo_image)
+
+    # # display on the sidebar the uploaded image
+    # st.sidebar.text('Original Image')
+    # st.sidebar.image(image)
     
-    # call the function to segment the image
-    segmented_image = segment_image_kmeans(image, k=k_value, attempts=attempts_value_slider)
+    # # call the function to segment the image
+    # segmented_image = segment_image_kmeans(image, k=k_value, attempts=attempts_value_slider)
     
-    # Display the result on the right (main frame)
-    st.subheader('Output Image')
-    st.image(segmented_image, use_column_width=True)
+    # # Display the result on the right (main frame)
+    # st.subheader('Output Image')
+    # st.image(segmented_image, use_column_width=True)
