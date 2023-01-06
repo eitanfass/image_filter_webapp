@@ -1,33 +1,32 @@
-
 import streamlit as st
-import skimage.io as io # io is an input output moduile, as part of skimage
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import numpy as np
-from skimage.util import img_as_float
 import scipy.ndimage
 import matplotlib.colors as colors
 import matplotlib
-import glob
+import os
+from PIL import Image
 
 
-def GRVI(img_path,gauss=False,mean=False,sigma=1.0,kernel_size=3):
+def GRVI(img,gauss=False,mean=False,sigma=1.0,kernel_size=3):
   '''functon gets img path and boolian 
   values to deermin the image 
   filtering before applying 
   GRVI index on the img in the path. returns: img,index (as float imgs)'''
-  img=io.imread(img_path)#read img from path
+  img=np.array(img)
 
   if gauss==True:
     img = scipy.ndimage.gaussian_filter(img, sigma=sigma)#apply gauss filter on image to blurr out noise
   if mean ==True:
     img = scipy.ndimage.uniform_filter(img, size=kernel_size)# apply mean filter on img to make eges sharper
-  img = img_as_float(img)#format img to float_img
+  img = img.convert("F")#format img to float_img
+
   return img,(img[:,:,1]-img[:,:,0])/(img[:,:,1]+img[:,:,0])# return img and indexed img
 
 
 
-def show_index(img,index,index_name=''):# function that plots img and index, with colorbar, index_name will show in the title
+def show_index(img,index,index_name='RGVI'):# function that plots img and index, with colorbar, index_name will show in the title
   # define figure size: width 10 and height 15
   plt.figure(figsize=(10, 15))
 
@@ -64,14 +63,27 @@ uploaded_image = st.file_uploader('Choose an image:', type=['png', 'jpg', 'jpeg'
 
 if uploaded_image is not None:
     # Read the image and convert to a NumPy array
-    image = io.imread(uploaded_image)
+    image = Image.open(uploaded_image)
+
 
     # Allow the user to apply Gaussian and uniform filters
     gauss = st.checkbox('Apply Gaussian filter')
     mean = st.checkbox('Apply uniform filter')
 
+    # If the Gaussian filter is selected, add a slider for the sigma parameter
+    if gauss:
+        sigma = st.slider('Sigma:', 0.0, 3.0, 1.0, 0.1)
+    else:
+        sigma = None
+
+    # If the uniform filter is selected, add a slider for the size parameter
+    if mean:
+        size = st.slider('Size:', 3, 7, 3)
+    else:
+        size = None
+
     # Calculate the GRVI index
-    _, index = GRVI(uploaded_image, gauss=gauss, mean=mean)
+    _, index = GRVI(uploaded_image, gauss=gauss, mean=mean, sigma=sigma, size=size)
 
     # Create a binary mask from the index using the mean value as the threshold
     mask = index.copy()
@@ -82,6 +94,15 @@ if uploaded_image is not None:
     show_index(image, index, mask)
     st.pyplot()
 
+    # Allow the user to choose a destination folder for the saved images
+    save_folder = st.folder_selector('Save images to:', default='.')
+
+    # Save the indexed image, mask, and plot to the chosen folder
+    if st.button('Save Indexed Image'):
+        im = Image.fromarray(index)
+        im.save(os.path.join(save_folder, 'indexed_image.jpg'))
+        st.success('Indexed image saved')
+        
     # Allow the user to save the indexed image, mask, and plot
     if st.button('Save Indexed Image'):
         st.image(index, width=300)
@@ -92,4 +113,3 @@ if uploaded_image is not None:
     if st.button('Save Plot'):
         st.pyplot(width=600, height=600)
         st.success('Plot saved')
-
