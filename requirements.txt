@@ -1,4 +1,4 @@
-streamlit==1.16.0
-matplotlib==3.2.2
-numpy==1.21.6
-protobuf==4.21.12
+streamlit
+matplotlib
+numpy
+protobuf
