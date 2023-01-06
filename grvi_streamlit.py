@@ -60,24 +60,8 @@ if uploaded_image is not None:
     image = Image.open(uploaded_image)
 
 
-    # Allow the user to apply Gaussian and uniform filters
-    gauss = st.checkbox('Apply Gaussian filter')
-    mean = st.checkbox('Apply uniform filter')
-
-    # If the Gaussian filter is selected, add a slider for the sigma parameter
-    if gauss:
-        sigma = st.slider('Sigma:', 0.0, 3.0, 1.0, 0.1)
-    else:
-        sigma = None
-
-    # If the uniform filter is selected, add a slider for the size parameter
-    if mean:
-        size = st.slider('Size:', 3, 7, 3)
-    else:
-        size = None
-
     # Calculate the GRVI index
-    _, index = GRVI(uploaded_image, gauss=gauss, mean=mean, sigma=sigma, size=size)
+    _, index = GRVI(image)
 
     # Create a binary mask from the index using the mean value as the threshold
     mask = index.copy()
