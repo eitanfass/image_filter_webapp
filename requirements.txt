@@ -2,4 +2,4 @@ streamlit
 matplotlib
 numpy
 protobuf
-skimage==0.18.3
+
