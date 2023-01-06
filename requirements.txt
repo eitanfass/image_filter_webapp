@@ -1,5 +1,5 @@
-streamlit-1.16.0
+streamlit==1.16.0
 skimage
-matplotlib-3.2.2
-numpy-1.21.6
-protobuf-4.21.12
+matplotlib==3.2.2
+numpy==1.21.6
+protobuf==4.21.12
