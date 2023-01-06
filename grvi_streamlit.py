@@ -54,7 +54,7 @@ st.title('GRVI Index and Mask Generator')
 
 # Allow the user to upload an image
 uploaded_image = st.file_uploader('Choose an image:', type=['png', 'jpg', 'jpeg'])
-
+st.set_option('deprecation.showPyplotGlobalUse', False)
 if uploaded_image is not None:
     # Read the image and convert to a NumPy array
     image = Image.open(uploaded_image)
