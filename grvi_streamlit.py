@@ -15,7 +15,7 @@ def GRVI(img):
   GRVI index on the img in the path. returns: img,index (as float imgs)'''
   
   img = img.convert("F")#format img to float_img
-  img=np.array(img)
+  #img=np.array(img)
   return img,(img[:,:,1]-img[:,:,0])/(img[:,:,1]+img[:,:,0])# return img and indexed img
 
 
