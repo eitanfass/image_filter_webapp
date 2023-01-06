@@ -2,26 +2,20 @@ import streamlit as st
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import numpy as np
-import scipy.ndimage
 import matplotlib.colors as colors
 import matplotlib
 import os
-from PIL import Image
+from PIL import Image,ImageFilter
 
 
-def GRVI(img,gauss=False,mean=False,sigma=1.0,kernel_size=3):
+def GRVI(img):
   '''functon gets img path and boolian 
   values to deermin the image 
   filtering before applying 
   GRVI index on the img in the path. returns: img,index (as float imgs)'''
-  img=np.array(img)
-
-  if gauss==True:
-    img = scipy.ndimage.gaussian_filter(img, sigma=sigma)#apply gauss filter on image to blurr out noise
-  if mean ==True:
-    img = scipy.ndimage.uniform_filter(img, size=kernel_size)# apply mean filter on img to make eges sharper
+  
   img = img.convert("F")#format img to float_img
-
+  img=np.array(img)
   return img,(img[:,:,1]-img[:,:,0])/(img[:,:,1]+img[:,:,0])# return img and indexed img
 
 
