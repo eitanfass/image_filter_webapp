@@ -151,9 +151,9 @@ if app_mode == 'GRVI an Image':
         #show_index(image, index)
         #st.pyplot()
         
-        st.columns(2)
-        st.image(image, caption='Original image', use_column_width=True, column=0)
-        st.image(index, caption='Indexed Image', use_column_width=True, column=1)
+ 
+        st.image(image, caption='Original image', use_column_width=True)
+        st.image(index, caption='Indexed Image', use_column_width=True)
        
         st.image(masked_img, caption='Masked Image', use_column_width=True)
         
