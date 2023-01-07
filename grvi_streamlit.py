@@ -149,7 +149,7 @@ if app_mode == 'GRVI an Image':
 
         # Show the indexed image, mask, and original image side by side
         #show_index(image, index)
-        st.pyplot()
+        #st.pyplot()
         
         st.columns(2)
         st.image(image, caption='Original image', use_column_width=True, column=0)
