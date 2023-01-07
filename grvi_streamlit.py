@@ -189,8 +189,9 @@ if app_mode == 'GRVI an Image':
         st.image(masked_img, caption='Masked Image', use_column_width=True)
         
         # Allow the user to choose a destination folder for the saved images
-        save_folder = st.folder_selector('Save images to:', default='.')
-
+#         save_folder = st.folder_selector('Save images to:', default='.')
+        # Create a file selector dialog using the askdirectory function
+        save_folder = os.path.abspath(st.sidebar.selectbox('Select a destenation folder for saved images:', os.listdir()))
         # Save the indexed image, mask, and plot to the chosen folder
         if st.button('Save Indexed Image'):
             im = Image.fromarray(grvi)
