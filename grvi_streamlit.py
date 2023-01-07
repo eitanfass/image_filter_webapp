@@ -59,48 +59,6 @@ st.set_page_config(page_title='GRVI - Eitan Fass', page_icon = favicon, layout =
 # add dropdown to select pages on left
 app_mode = st.sidebar.selectbox('Navigate',
                                   ['About App', 'GRVI an Image'])
-# About page
-if app_mode == 'About App':
-    
-    
-    
-    # side bar
-    st.markdown(
-        """
-        <style>
-        [data-testid="stSidebar"][aria-expanded="true"] . div:first-child{
-            width: 350px
-        }
-
-        [data-testid="stSidebar"][aria-expanded="false"] . div:first-child{
-            width: 350px
-            margin-left: -350px
-        }    
-        </style>
-
-        """,
-        unsafe_allow_html=True,
-
-
-    )
-
- 
-    st.markdown('''
-                # About the app 
-## Welcome to the GRVI Index and Mask Generator!
-
-This app allows you to upload an image and apply various filters to it before calculating the GRVI index and generating a binary mask based on the index. You can also save the resulting indexed image, mask, and plot to a chosen folder.
-
-The GRVI index is a measure of the greenness of a pixel in an image, and is calculated using the following formula:
-
-GRVI = (G - R) / (G + R)
-
-Where G is the green channel value and R is the red channel value. The resulting index values range from -1 to 1, with higher values indicating a higher degree of greenness.\n
-
-We hope you find this app useful for your image processing needs. If you have any questions or suggestions, please don't hesitate to contact us.\n
-
-
-                ''') 
 
 # Run image
 if app_mode == 'GRVI an Image':
@@ -219,3 +177,45 @@ if app_mode == 'GRVI an Image':
 #         if st.button('Save Plot'):
 #             fig.savefig(f'{save_folder}/figure.png')
 #             st.success('Plot saved')
+# About page
+if app_mode == 'About App':
+    
+    
+    
+    # side bar
+    st.markdown(
+        """
+        <style>
+        [data-testid="stSidebar"][aria-expanded="true"] . div:first-child{
+            width: 350px
+        }
+
+        [data-testid="stSidebar"][aria-expanded="false"] . div:first-child{
+            width: 350px
+            margin-left: -350px
+        }    
+        </style>
+
+        """,
+        unsafe_allow_html=True,
+
+
+    )
+
+ 
+    st.markdown('''
+                # About the app 
+## Welcome to the GRVI Index and Mask Generator!
+
+This app allows you to upload an image and apply various filters to it before calculating the GRVI index and generating a binary mask based on the index. You can also save the resulting indexed image, mask, and plot to a chosen folder.
+
+The GRVI index is a measure of the greenness of a pixel in an image, and is calculated using the following formula:
+
+GRVI = (G - R) / (G + R)
+
+Where G is the green channel value and R is the red channel value. The resulting index values range from -1 to 1, with higher values indicating a higher degree of greenness.\n
+
+We hope you find this app useful for your image processing needs. If you have any questions or suggestions, please don't hesitate to contact us.\n
+
+
+                ''') 
