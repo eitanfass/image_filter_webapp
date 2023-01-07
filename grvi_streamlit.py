@@ -6,7 +6,7 @@ import matplotlib.colors as colors
 import matplotlib
 import os
 from PIL import Image,ImageFilter
-
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 def GRVI(img):#
   '''functon gets img path and boolian 
@@ -138,33 +138,7 @@ if app_mode == 'GRVI an Image':
         # Calculate the GRVI index
         index = GRVI(image)
         
-        mask_thresh= st.sidebar.number_input('Insert threshhold value for mask:', value=0, min_value = -1,max_value=1) # asks for input from the user
-        # Create a binary mask from the index using the mean value as the threshold
-        mask = create_mask_from_index(index,mask_thresh)
-        img=np.array(image)
-        d_mask=img.copy()
-        d_mask[:,:,0],d_mask[:,:,1],d_mask[:,:,2]=mask,mask,mask
-        masked_img=img*d_mask
-#         # define figure size: width 10 and height 15
-#         plt.figure(figsize=(10, 15))
-
-#         # subplot for the RGB
-#         ax1 = plt.subplot(121, title='Original RGB')
-#         im1 = ax1.imshow(img) 
-
-#         # subplot for the index
-#         ax2 = plt.subplot(122, title=f'{index_name} index, mean={np.nanmean(index):.3f}') # notice the position, and the title
-#         cmap=matplotlib.cm.get_cmap('Spectral_r',10)#set colormap to Spectral
-#         im2 = ax2.imshow(index*255,cmap=cmap)#show index in Spectral colormap
-#         #im2.set_clim(vmax=index.max(), vmin=index.min())# set min max values of color to max and min values of index img
-
-#         # add colorbar only to the image on the right
-#         divider = make_axes_locatable(ax2)
-#         colorbar_ax = divider.append_axes("right", size="5%", pad=0.05)  
-#         plt.colorbar(im2, cax=colorbar_ax);
-
-        # Display the original RGB image
-        # Create a figure and two subplots
+   
         fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(10, 15))
 
         # Display the original image in the first subplot
@@ -191,7 +165,13 @@ if app_mode == 'GRVI an Image':
  
 #         st.image(image, caption='Original image', use_column_width=True)
 #         st.image(index, caption='Indexed Image', use_column_width=True)
-       
+        mask_thresh= mask_threshold = st.slider('Mask threshold', -1.0, 1.0, 0.0, 0.02)# asks for input from the user
+        # Create a binary mask from the index using the mean value as the threshold
+        mask = create_mask_from_index(index,mask_thresh)
+        img=np.array(image)
+        d_mask=img.copy()
+        d_mask[:,:,0],d_mask[:,:,1],d_mask[:,:,2]=mask,mask,mask
+        masked_img=img*d_mask
         st.image(masked_img, caption='Masked Image', use_column_width=True)
         
         # Allow the user to choose a destination folder for the saved images
