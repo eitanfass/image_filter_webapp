@@ -145,28 +145,42 @@ if app_mode == 'GRVI an Image':
         d_mask=img.copy()
         d_mask[:,:,0],d_mask[:,:,1],d_mask[:,:,2]=mask,mask,mask
         masked_img=img*d_mask
-        # define figure size: width 10 and height 15
-        plt.figure(figsize=(10, 15))
+#         # define figure size: width 10 and height 15
+#         plt.figure(figsize=(10, 15))
 
-        # subplot for the RGB
-        ax1 = plt.subplot(121, title='Original RGB')
-        im1 = ax1.imshow(img) 
+#         # subplot for the RGB
+#         ax1 = plt.subplot(121, title='Original RGB')
+#         im1 = ax1.imshow(img) 
 
-        # subplot for the index
-        ax2 = plt.subplot(122, title=f'{index_name} index, mean={np.nanmean(index):.3f}') # notice the position, and the title
-        cmap=matplotlib.cm.get_cmap('Spectral_r',10)#set colormap to Spectral
-        im2 = ax2.imshow(index*255,cmap=cmap)#show index in Spectral colormap
-        #im2.set_clim(vmax=index.max(), vmin=index.min())# set min max values of color to max and min values of index img
+#         # subplot for the index
+#         ax2 = plt.subplot(122, title=f'{index_name} index, mean={np.nanmean(index):.3f}') # notice the position, and the title
+#         cmap=matplotlib.cm.get_cmap('Spectral_r',10)#set colormap to Spectral
+#         im2 = ax2.imshow(index*255,cmap=cmap)#show index in Spectral colormap
+#         #im2.set_clim(vmax=index.max(), vmin=index.min())# set min max values of color to max and min values of index img
 
-        # add colorbar only to the image on the right
-        divider = make_axes_locatable(ax2)
-        colorbar_ax = divider.append_axes("right", size="5%", pad=0.05)  
-        plt.colorbar(im2, cax=colorbar_ax);
+#         # add colorbar only to the image on the right
+#         divider = make_axes_locatable(ax2)
+#         colorbar_ax = divider.append_axes("right", size="5%", pad=0.05)  
+#         plt.colorbar(im2, cax=colorbar_ax);
+
+          # Display the original RGB image
+          st.subheader('Original RGB')
+          st.image(img, width=300)
+
+          # Display the index image
+          st.subheader(f'GRVI index, mean={np.nanmean(index):.3f}')
+          cmap = matplotlib.cm.get_cmap('Spectral_r', 10)
+
+          # Use a temporary buffer to display the index image with the color map
+          buf = io.BytesIO()
+          plt.imsave(buf, index*255, cmap=cmap)
+          buf.seek(0)
+          st.image(buf, width=300)
 
 
         # Show the indexed image, mask, and original image side by side
         #show_index(image, index)
-        st.pyplot()
+#         st.pyplot()
         
  
 #         st.image(image, caption='Original image', use_column_width=True)
