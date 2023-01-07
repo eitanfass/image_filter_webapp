@@ -133,9 +133,14 @@ if app_mode == 'GRVI an Image':
         
         # Read the image and convert to a NumPy array
         image = Image.open(uploaded_image)
+        
+        # Get the pixel values as a flat 1D array
+        pixels = list(image.getdata())
+
+        pixels = np.array(pixels).reshape(image.height, image.width, 3)  # 3D RGB image
         # Separate the green and red layers
-        green_layer = image[:, :, 1]
-        red_layer = image[:, :, 0]
+        green_layer = pixels[:, :, 1]
+        red_layer = pixels[:, :, 0]
 
         # Create sliders for the weights of the green and red layers
         green_weight = st.slider('Green weight', 0.0, 1.0, 0.5)
