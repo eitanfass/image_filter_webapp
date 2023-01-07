@@ -129,7 +129,7 @@ if app_mode == 'GRVI an Image':
     # Allow the user to upload an image
     uploaded_image =st.sidebar.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
     if uploaded_image == None:
-        uploaded_image = Image.open('demo.jpg')
+        uploaded_image = 'demo.jpg'
     if uploaded_image is not None:
         
         # Read the image and convert to a NumPy array
