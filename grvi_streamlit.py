@@ -111,8 +111,8 @@ if app_mode == 'GRVI an Image':
           if st.button('What is this?'):
             # Display the text as markdown when the button is clicked
             st.markdown('''If the index is not properly differentiating between green and red, adjust the color weights to improve the results.''')
-            grvi = (green_weight * green_layer - red_weight * red_layer) / (green_weight * green_layer + red_weight * red_layer)
-          else:grvi = ( green_layer - red_layer) / ( green_layer +  red_layer)
+          grvi = (green_weight * green_layer - red_weight * red_layer) / (green_weight * green_layer + red_weight * red_layer)
+        else:grvi = ( green_layer - red_layer) / ( green_layer +  red_layer)
         # Calculate the GRVI index
         
 
