@@ -133,12 +133,21 @@ if app_mode == 'GRVI an Image':
         
         # Read the image and convert to a NumPy array
         image = Image.open(uploaded_image)
+        # Separate the green and red layers
+        green_layer = image[:, :, 1]
+        red_layer = image[:, :, 0]
+
+        # Create sliders for the weights of the green and red layers
+        green_weight = st.slider('Green weight', 0.0, 1.0, 0.5)
+        red_weight = st.slider('Red weight', 0.0, 1.0, 0.5)
+
+        # Calculate the GRVI index
+        grvi = (green_weight * green_layer - red_weight * red_layer) / (green_weight * green_layer + red_weight * red_layer)
+
+        # Display the GRVI index      
         img=np.array(image)
         st.sidebar.image(image)
-        # Calculate the GRVI index
-        index = GRVI(image)
-        
-   
+ 
         fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(10, 15))
 
         # Display the original image in the first subplot
@@ -147,7 +156,7 @@ if app_mode == 'GRVI an Image':
 
         # Display the indexed image in the second subplot
         cmap = matplotlib.cm.get_cmap('Spectral_r', 10)
-        im2 = ax2.imshow(index * 255, cmap=cmap)
+        im2 = ax2.imshow(grvi, cmap=cmap)
         ax2.set_title(f'GRVI index, mean={np.nanmean(index):.3f}')
 
         # Add a color bar to the second subplot
