@@ -195,13 +195,17 @@ if app_mode == 'GRVI an Image':
         # Save the indexed image, mask, and plot to the chosen folder
         if st.button('Save Indexed Image'):
             im = Image.fromarray(grvi)
-            im.save(os.path.join(save_folder, 'indexed_image.jpg'))
+        
+            # Save the image to the folder
+            file_path = os.path.join(save_folder, f'Indexed Image.jpg')
+            pil_image.save(file_path)
             st.success('Indexed image saved')
             
         if st.button('Save Mask'):
-            st.image(masked_img, width=300)
-            im.save(os.path.join(save_folder, 'masked_image.jpg'))
-            st.success('Mask saved')
+            im = Image.fromarray(masked_img)
+            file_path = os.path.join(save_folder, f'Indexed Image.jpg')
+            pil_image.save(file_path)
+            st.success('Indexed image saved')
         if st.button('Save Plot'):
-            st.pyplot(width=600, height=600)
+            fig.savefig(f'{save_folder}/figure.png')
             st.success('Plot saved')
