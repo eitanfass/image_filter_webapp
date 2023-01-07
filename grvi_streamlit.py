@@ -162,7 +162,7 @@ if app_mode == 'GRVI an Image':
         # Display the indexed image in the second subplot
         cmap = matplotlib.cm.get_cmap('Spectral_r', 10)
         im2 = ax2.imshow(grvi, cmap=cmap)
-        ax2.set_title(f'GRVI index, mean={np.nanmean(index):.3f}')
+        ax2.set_title(f'GRVI index, mean={np.nanmean(grvi):.3f}')
 
         # Add a color bar to the second subplot
         divider = make_axes_locatable(ax2)
