@@ -103,13 +103,14 @@ if app_mode == 'GRVI an Image':
         # Separate the green and red layers
         green_layer = pixels[:, :, 1]
         red_layer = pixels[:, :, 0]
+        if st.button('advanced options'):
 
-        # Create sliders for the weights of the green and red layers
-        green_weight = st.slider('Green weight', 0.0, 1.0, 0.5)
-        red_weight = st.slider('Red weight', 0.0, 1.0, 0.5)
-        if st.button('What is this?'):
-          # Display the text as markdown when the button is clicked
-          st.markdown('''If the index is not properly differentiating between green and red, adjust the color weights to improve the results.''')
+          # Create sliders for the weights of the green and red layers
+          green_weight = st.slider('Green weight', 0.0, 1.0, 0.5)
+          red_weight = st.slider('Red weight', 0.0, 1.0, 0.5)
+          if st.button('What is this?'):
+            # Display the text as markdown when the button is clicked
+            st.markdown('''If the index is not properly differentiating between green and red, adjust the color weights to improve the results.''')
 
         # Calculate the GRVI index
         grvi = (green_weight * green_layer - red_weight * red_layer) / (green_weight * green_layer + red_weight * red_layer)
@@ -154,6 +155,7 @@ if app_mode == 'GRVI an Image':
         d_mask=img.copy()
         d_mask[:,:,0],d_mask[:,:,1],d_mask[:,:,2]=mask,mask,mask
         masked_img=img*d_mask
+        masked_img[d_mask==0]=255
         st.image(masked_img, caption='Masked Image', use_column_width=True)
         
         # Allow the user to choose a destination folder for the saved images
