@@ -14,7 +14,7 @@ def GRVI(img):
   filtering before applying 
   GRVI index on the img in the path. returns: img,index (as float imgs)'''
   
-  #img = img.convert("F")#format img to float_img
+  img = img.convert("F")#format img to float_img
   img=np.array(img)
   return img,(img[:,:,1]-img[:,:,0])/(img[:,:,1]+img[:,:,0])# return img and indexed img
 
@@ -49,45 +49,117 @@ def create_mask_from_index(index,thresh=None):# function that creats a mask for 
   mask[mask<=thresh]=0  # if pixel value is smaller than threshold set value to 0
   return mask #returns a binery one layer mask
 
+
 # Set the app title
 st.title('GRVI Index and Mask Generator')
+# add dropdown to select pages on left
+app_mode = st.sidebar.selectbox('Navigate',
+                                  ['About App', 'GRVI an Image'])
+# About page
+if app_mode == 'About App':
+    st.markdown('In this app we will segment images using K-Means')
+    
+    
+    # side bar
+    st.markdown(
+        """
+        <style>
+        [data-testid="stSidebar"][aria-expanded="true"] . div:first-child{
+            width: 350px
+        }
 
-# Allow the user to upload an image
-uploaded_image = st.file_uploader('Choose an image:', type=['png', 'jpg', 'jpeg'])
-st.set_option('deprecation.showPyplotGlobalUse', False)
-if uploaded_image is not None:
-    # Read the image and convert to a NumPy array
-    image = Image.open(uploaded_image)
+        [data-testid="stSidebar"][aria-expanded="false"] . div:first-child{
+            width: 350px
+            margin-left: -350px
+        }    
+        </style>
+
+        """,
+        unsafe_allow_html=True,
 
 
-    # Calculate the GRVI index
-    _, index = GRVI(image)
+    )
 
-    # Create a binary mask from the index using the mean value as the threshold
-    mask = index.copy()
-    mask[mask > index.mean()] = 1
-    mask[mask <= index.mean()] = 0
+    # add a video to the page
+    st.video('https://www.youtube.com/watch?v=6CqRnx6Ic48')
 
-    # Show the indexed image, mask, and original image side by side
-    show_index(image, index, mask)
-    st.pyplot()
 
-    # Allow the user to choose a destination folder for the saved images
-    save_folder = st.folder_selector('Save images to:', default='.')
+    st.markdown('''
+                ## About the app \n
+                Welcome to the GRVI Index and Mask Generator!\n
+                This app allows you to upload an image and apply various\n
+                 filters to it before calculating the GRVI index \n
+                 and generating a binary mask based on the index. \n
+                 You can also save the resulting indexed image, mask,\n
+                  and plot to a chosen folder.The GRVI index is a measure\n
+                   of the greenness of a pixel in an image, and is calculated using the following formula:\n
+$GRVI = (G - R) / (G + R)$\n
+Where G is the green channel value and R is the red channel value. The resulting index values range from -1 to 1, with higher values indicating a higher degree of greenness.\n
+We hope you find this app useful for your image processing needs. If you have any questions or suggestions, please don't hesitate to contact us.\n
 
-    # Save the indexed image, mask, and plot to the chosen folder
-    if st.button('Save Indexed Image'):
-        im = Image.fromarray(index)
-        im.save(os.path.join(save_folder, 'indexed_image.jpg'))
-        st.success('Indexed image saved')
-        
-    # Allow the user to save the indexed image, mask, and plot
-    if st.button('Save Indexed Image'):
-        st.image(index, width=300)
-        st.success('Indexed image saved')
-    if st.button('Save Mask'):
-        st.image(mask, width=300)
-        st.success('Mask saved')
-    if st.button('Save Plot'):
-        st.pyplot(width=600, height=600)
-        st.success('Plot saved')
+
+                ''') 
+# Run image
+if app_mode == 'GRVI an Image':
+    
+    st.sidebar.markdown('---') # adds a devider (a line)
+    
+    # side bar
+    st.markdown(
+        """
+        <style>
+        [data-testid="stSidebar"][aria-expanded="true"] . div:first-child{
+            width: 350px
+        }
+
+        [data-testid="stSidebar"][aria-expanded="false"] . div:first-child{
+            width: 350px
+            margin-left: -350px
+        }    
+        </style>
+
+        """,
+        unsafe_allow_html=True,
+
+
+    )
+
+
+
+  # Allow the user to upload an image
+  uploaded_image =st.sidebar.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
+
+  if uploaded_image is not None:
+      # Read the image and convert to a NumPy array
+      image = Image.open(uploaded_image)
+      # Calculate the GRVI index
+      _, index = GRVI(image)
+
+      # Create a binary mask from the index using the mean value as the threshold
+      mask = index.copy()
+      mask[mask > index.mean()] = 1
+      mask[mask <= index.mean()] = 0
+
+      # Show the indexed image, mask, and original image side by side
+      show_index(image, index, mask)
+      st.pyplot()
+
+      # Allow the user to choose a destination folder for the saved images
+      save_folder = st.folder_selector('Save images to:', default='.')
+
+      # Save the indexed image, mask, and plot to the chosen folder
+      if st.button('Save Indexed Image'):
+          im = Image.fromarray(index)
+          im.save(os.path.join(save_folder, 'indexed_image.jpg'))
+          st.success('Indexed image saved')
+          
+      # Allow the user to save the indexed image, mask, and plot
+      if st.button('Save Indexed Image'):
+          st.image(index, width=300)
+          st.success('Indexed image saved')
+      if st.button('Save Mask'):
+          st.image(mask, width=300)
+          st.success('Mask saved')
+      if st.button('Save Plot'):
+          st.pyplot(width=600, height=600)
+          st.success('Plot saved')
