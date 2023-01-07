@@ -51,6 +51,11 @@ def create_mask_from_index(index,thresh=None):# function that creats a mask for 
 
 
 # Set the app title
+favicon = 'fabicon.jpg'
+
+# main page
+st.set_page_config(page_title='GRVI - Eitan Fass', page_icon = favicon, layout = 'wide', initial_sidebar_state = 'auto')
+st.title('Image Segmentation using K-Means, by Yedidya Harris')
 st.title('GRVI Index and Mask Generator')
 # add dropdown to select pages on left
 app_mode = st.sidebar.selectbox('Navigate',
