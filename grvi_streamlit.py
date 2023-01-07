@@ -14,7 +14,7 @@ def GRVI(img):
   filtering before applying 
   GRVI index on the img in the path. returns: img,index (as float imgs)'''
   
-  #img = img.convert("F")#format img to float_img
+  img = img.convert("F")#format img to float_img
   img=np.array(img)
   return img,(img[:,:,1]-img[:,:,0])/(img[:,:,1]+img[:,:,0])# return img and indexed img
 
@@ -29,7 +29,7 @@ def show_index(img,index,index_name='RGVI'):# function that plots img and index,
   im1 = ax1.imshow(img) 
 
   # subplot for the index
-  ax2 = plt.subplot(122, title=f'{index_name} index, mean={np.nanmean(index):.3f} min={np.nanmin(index):.3f} max={np.nanmax(index):.3f}') # notice the position, and the title
+  ax2 = plt.subplot(122, title=f'{index_name} index, mean={np.nanmean(index):.3f}') # notice the position, and the title
   cmap=matplotlib.cm.get_cmap('Spectral_r',10)#set colormap to Spectral
   im2 = ax2.imshow(index,cmap=cmap)#show index in Spectral colormap
   im2.set_clim(vmax=index.max(), vmin=index.min())# set min max values of color to max and min values of index img
@@ -37,7 +37,7 @@ def show_index(img,index,index_name='RGVI'):# function that plots img and index,
   # add colorbar only to the image on the right
   divider = make_axes_locatable(ax2)
   colorbar_ax = divider.append_axes("right", size="5%", pad=0.05)  
-  plt.colorbar(im2, cax=colorbar_ax)
+  plt.colorbar(im2, cax=colorbar_ax);
 
 
 def create_mask_from_index(index,thresh=None):# function that creats a mask for an index img from a threshhold if provided
@@ -82,16 +82,18 @@ if app_mode == 'About App':
 
  
     st.markdown('''
-                ## About the app \n
-                Welcome to the GRVI Index and Mask Generator!\n
-                This app allows you to upload an image and apply various\n
-                 filters to it before calculating the GRVI index \n
-                 and generating a binary mask based on the index. \n
-                 You can also save the resulting indexed image, mask,\n
-                  and plot to a chosen folder.The GRVI index is a measure\n
-                   of the greenness of a pixel in an image, and is calculated using the following formula:\n
-$GRVI = (G - R) / (G + R)$\n
+                ## About the app 
+
+                Welcome to the GRVI Index and Mask Generator! 
+
+This app allows you to upload an image and apply various filters to it before calculating the GRVI index and generating a binary mask based on the index. You can also save the resulting indexed image, mask, and plot to a chosen folder.
+
+The GRVI index is a measure of the greenness of a pixel in an image, and is calculated using the following formula:
+
+GRVI = (G - R) / (G + R)
+
 Where G is the green channel value and R is the red channel value. The resulting index values range from -1 to 1, with higher values indicating a higher degree of greenness.\n
+
 We hope you find this app useful for your image processing needs. If you have any questions or suggestions, please don't hesitate to contact us.\n
 
 
@@ -131,11 +133,12 @@ if app_mode == 'GRVI an Image':
         image = Image.open(uploaded_image)
         # Calculate the GRVI index
         _, index = GRVI(image)
-
+        mask_thresh=k_value = st.sidebar.number_input('Insert threshhold value for mask:', value=0, min_value = -1,max_value=1) # asks for input from the user
         # Create a binary mask from the index using the mean value as the threshold
         mask = index.copy()
-        mask[mask > index.mean()] = 1
-        mask[mask <= index.mean()] = 0
+        mask[mask > mask_thresh] = 1
+        mask[mask <= mask_thresh] = 0
+        
 
         # Show the indexed image, mask, and original image side by side
         show_index(image, index, mask)
