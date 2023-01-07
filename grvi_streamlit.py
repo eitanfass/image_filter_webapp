@@ -130,7 +130,7 @@ if app_mode == 'GRVI an Image':
     uploaded_image =st.sidebar.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
 
     if uploaded_image is not None:
-        st.sidebar.image(image)
+        
         # Read the image and convert to a NumPy array
         image = Image.open(uploaded_image)
         # Calculate the GRVI index
