@@ -149,6 +149,9 @@ if app_mode == 'GRVI an Image':
         # Create sliders for the weights of the green and red layers
         green_weight = st.slider('Green weight', 0.0, 1.0, 0.5)
         red_weight = st.slider('Red weight', 0.0, 1.0, 0.5)
+        if st.button('What is this?'):
+          # Display the text as markdown when the button is clicked
+          st.markdown('''If the index is not properly differentiating between green and red, adjust the color weights to improve the results.''')
 
         # Calculate the GRVI index
         grvi = (green_weight * green_layer - red_weight * red_layer) / (green_weight * green_layer + red_weight * red_layer)
@@ -183,7 +186,10 @@ if app_mode == 'GRVI an Image':
  
 #         st.image(image, caption='Original image', use_column_width=True)
 #         st.image(index, caption='Indexed Image', use_column_width=True)
-        mask_thresh= mask_threshold = st.slider('Mask threshold', -1.0, 1.0, 0.0, 0.02)# asks for input from the user
+        mask_thresh= mask_threshold = st.slider('Mask sensetivity', -1.0, 1.0, 0.0, 0.02)# asks for input from the user
+        if st.button('What is this?'):
+          # Display the text as markdown when the button is clicked
+          st.markdown('''Adjusting the mask threshold changes the sensitivity of the mask. A high threshold value results in a more sensitive mask, while a low threshold value results in a less sensitive mask.''')
         # Create a binary mask from the index using the mean value as the threshold
         mask = create_mask_from_index(grvi,mask_thresh)
         
