@@ -133,7 +133,7 @@ if app_mode == 'GRVI an Image':
         
         # Read the image and convert to a NumPy array
         image = Image.open(uploaded_image)
-        
+        img=np.array(image)
         st.sidebar.image(image)
         # Calculate the GRVI index
         index = GRVI(image)
@@ -168,7 +168,7 @@ if app_mode == 'GRVI an Image':
         mask_thresh= mask_threshold = st.slider('Mask threshold', -1.0, 1.0, 0.0, 0.02)# asks for input from the user
         # Create a binary mask from the index using the mean value as the threshold
         mask = create_mask_from_index(index,mask_thresh)
-        img=np.array(image)
+        
         d_mask=img.copy()
         d_mask[:,:,0],d_mask[:,:,1],d_mask[:,:,2]=mask,mask,mask
         masked_img=img*d_mask
