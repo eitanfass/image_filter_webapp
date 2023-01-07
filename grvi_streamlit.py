@@ -147,7 +147,7 @@ if app_mode == 'GRVI an Image':
  
 #         st.image(image, caption='Original image', use_column_width=True)
 #         st.image(index, caption='Indexed Image', use_column_width=True)
-        mask_thresh= mask_threshold = st.slider('Mask sensetivity', 0, 1, 0.0, 0.02)# asks for input from the user
+        mask_thresh= mask_threshold = st.slider('Mask sensetivity', 0.0, 1.0, 0.0, 0.02)# asks for input from the user
         if st.button('What is this? '):
           # Display the text as markdown when the button is clicked
           st.markdown('''Adjusting the mask threshold changes the sensitivity of the mask. A high threshold value results in a more sensitive mask, while a low threshold value results in a less sensitive mask.''')
