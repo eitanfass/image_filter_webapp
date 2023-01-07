@@ -16,7 +16,7 @@ def GRVI(img):
   
   #img = img.convert("F")#format img to float_img
   img=np.array(img)
-  return img,(img[:,:,1]-img[:,:,0])/(img[:,:,1]+img[:,:,0])# return img and indexed img
+  return (img[:,:,1]-img[:,:,0])/(img[:,:,1]+img[:,:,0])# return img and indexed img
 
 
 
@@ -31,8 +31,8 @@ def show_index(img,index,index_name='RGVI'):# function that plots img and index,
   # subplot for the index
   ax2 = plt.subplot(122, title=f'{index_name} index, mean={np.nanmean(index):.3f}') # notice the position, and the title
   cmap=matplotlib.cm.get_cmap('Spectral_r',10)#set colormap to Spectral
-  im2 = ax2.imshow(index,cmap=cmap)#show index in Spectral colormap
-  im2.set_clim(vmax=index.max(), vmin=index.min())# set min max values of color to max and min values of index img
+  im2 = ax2.imshow(index*255,cmap=cmap)#show index in Spectral colormap
+  #im2.set_clim(vmax=index.max(), vmin=index.min())# set min max values of color to max and min values of index img
   
   # add colorbar only to the image on the right
   divider = make_axes_locatable(ax2)
@@ -57,7 +57,7 @@ app_mode = st.sidebar.selectbox('Navigate',
                                   ['About App', 'GRVI an Image'])
 # About page
 if app_mode == 'About App':
-    st.markdown('In this app we will segment images using K-Means')
+    
     
     
     # side bar
@@ -84,7 +84,7 @@ if app_mode == 'About App':
     st.markdown('''
                 ## About the app 
 
-                Welcome to the GRVI Index and Mask Generator! 
+                Welcome to the GRVI Index and Mask Generator!
 
 This app allows you to upload an image and apply various filters to it before calculating the GRVI index and generating a binary mask based on the index. You can also save the resulting indexed image, mask, and plot to a chosen folder.
 
@@ -129,21 +129,29 @@ if app_mode == 'GRVI an Image':
     uploaded_image =st.sidebar.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
 
     if uploaded_image is not None:
+        st.sidebar.image(image)
         # Read the image and convert to a NumPy array
         image = Image.open(uploaded_image)
         # Calculate the GRVI index
-        _, index = GRVI(image)
-        mask_thresh=k_value = st.sidebar.number_input('Insert threshhold value for mask:', value=0, min_value = -1,max_value=1) # asks for input from the user
+        index = GRVI(image)
+        
+        mask_thresh= st.sidebar.number_input('Insert threshhold value for mask:', value=0, min_value = -1,max_value=1) # asks for input from the user
         # Create a binary mask from the index using the mean value as the threshold
-        mask = index.copy()
-        mask[mask > mask_thresh] = 1
-        mask[mask <= mask_thresh] = 0
+        mask = create_mask_from_index(index,mask_thresh)
+        img=np.array(image)
+        d_mask=img.copy()
+        d_mask[:,:,0],d_mask[:,:,1],d_mask[:,:,2]=mask,mask,mask
+        masked_img=img*d_mask
         
 
         # Show the indexed image, mask, and original image side by side
-        show_index(image, index, mask)
+        show_index(image, index)
         st.pyplot()
-
+        
+        
+        st.subheader('Masked Image')
+        st.image(masked_img, use_column_width=True)
+        
         # Allow the user to choose a destination folder for the saved images
         save_folder = st.folder_selector('Save images to:', default='.')
 
