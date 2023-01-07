@@ -165,24 +165,24 @@ if app_mode == 'GRVI an Image':
 
         # Display the original RGB image
         # Create a figure and two subplots
-      fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(10, 15))
+        fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(10, 15))
 
-      # Display the original image in the first subplot
-      im1 = ax1.imshow(img)
-      ax1.set_title('Original RGB')
+        # Display the original image in the first subplot
+        im1 = ax1.imshow(img)
+        ax1.set_title('Original RGB')
 
-      # Display the indexed image in the second subplot
-      cmap = matplotlib.cm.get_cmap('Spectral_r', 10)
-      im2 = ax2.imshow(index * 255, cmap=cmap)
-      ax2.set_title(f'{index_name} index, mean={np.nanmean(index):.3f}')
+        # Display the indexed image in the second subplot
+        cmap = matplotlib.cm.get_cmap('Spectral_r', 10)
+        im2 = ax2.imshow(index * 255, cmap=cmap)
+        ax2.set_title(f'{index_name} index, mean={np.nanmean(index):.3f}')
 
-      # Add a color bar to the second subplot
-      divider = make_axes_locatable(ax2)
-      colorbar_ax = divider.append_axes("right", size="5%", pad=0.05)
-      plt.colorbar(im2, cax=colorbar_ax)
+        # Add a color bar to the second subplot
+        divider = make_axes_locatable(ax2)
+        colorbar_ax = divider.append_axes("right", size="5%", pad=0.05)
+        plt.colorbar(im2, cax=colorbar_ax)
 
-      # Display the figure in the Streamlit app
-      st.pyplot()
+        # Display the figure in the Streamlit app
+        st.pyplot()
 # This will display the original image and the indexed image with a color bar in a Streamlit app. The color map will be set to Spectral_r with 10 discrete colors. You can customize the color map by using a different value for the cmap parameter (e.g., 'viridis', 'plasma', 'inferno', etc.) and the number of discrete colors by modifying the second argument of get_cmap. You can also customize the appearance of the color bar by using the various options available in the colorbar function.
         # Show the indexed image, mask, and original image side by side
         #show_index(image, index)
