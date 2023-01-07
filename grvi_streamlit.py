@@ -58,7 +58,7 @@ st.set_page_config(page_title='GRVI - Eitan Fass', page_icon = favicon, layout =
 
 # add dropdown to select pages on left
 app_mode = st.sidebar.selectbox('Navigate',
-                                  ['About App', 'GRVI an Image'])
+                                  ['GRVI an Image','About App' ])
 
 # Run image
 if app_mode == 'GRVI an Image':
