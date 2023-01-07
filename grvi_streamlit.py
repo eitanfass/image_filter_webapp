@@ -88,7 +88,7 @@ if app_mode == 'About App':
     st.markdown('''
                 # About the app 
 
-                Welcome to the GRVI Index and Mask Generator!
+                ####Welcome to the GRVI Index and Mask Generator!
 
 This app allows you to upload an image and apply various filters to it before calculating the GRVI index and generating a binary mask based on the index. You can also save the resulting indexed image, mask, and plot to a chosen folder.
 
