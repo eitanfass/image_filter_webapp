@@ -181,7 +181,7 @@ if app_mode == 'GRVI an Image':
 #         st.image(index, caption='Indexed Image', use_column_width=True)
         mask_thresh= mask_threshold = st.slider('Mask threshold', -1.0, 1.0, 0.0, 0.02)# asks for input from the user
         # Create a binary mask from the index using the mean value as the threshold
-        mask = create_mask_from_index(index,mask_thresh)
+        mask = create_mask_from_index(grvi,mask_thresh)
         
         d_mask=img.copy()
         d_mask[:,:,0],d_mask[:,:,1],d_mask[:,:,2]=mask,mask,mask
@@ -193,16 +193,13 @@ if app_mode == 'GRVI an Image':
 
         # Save the indexed image, mask, and plot to the chosen folder
         if st.button('Save Indexed Image'):
-            im = Image.fromarray(index)
+            im = Image.fromarray(grvi)
             im.save(os.path.join(save_folder, 'indexed_image.jpg'))
             st.success('Indexed image saved')
             
-        # Allow the user to save the indexed image, mask, and plot
-        if st.button('Save Indexed Image'):
-            st.image(index, width=300)
-            st.success('Indexed image saved')
         if st.button('Save Mask'):
-            st.image(mask, width=300)
+            st.image(masked_img, width=300)
+            im.save(os.path.join(save_folder, 'masked_image.jpg'))
             st.success('Mask saved')
         if st.button('Save Plot'):
             st.pyplot(width=600, height=600)
