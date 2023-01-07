@@ -8,7 +8,7 @@ import os
 from PIL import Image,ImageFilter
 
 
-def GRVI(img):
+def GRVI(img):#
   '''functon gets img path and boolian 
   values to deermin the image 
   filtering before applying 
