@@ -194,19 +194,19 @@ if app_mode == 'GRVI an Image':
         # Create a file selector dialog using the askdirectory function
         save_folder = os.path.abspath(st.sidebar.selectbox('Select a destenation folder for saved images:', os.listdir()))
         # Save the indexed image, mask, and plot to the chosen folder
-        if st.button('Save Indexed Image'):
-            im = Image.fromarray(grvi)
+#         if st.button('Save Indexed Image'):
+#             im = Image.fromarray(grvi)
         
-            # Save the image to the folder
-            file_path = os.path.join(save_folder, f'Indexed Image.jpg')
-            pil_image.save(file_path)
-            st.success('Indexed image saved')
+#             # Save the image to the folder
+#             file_path = os.path.join(save_folder, f'Indexed Image.jpg')
+#             pil_image.save(file_path)
+#             st.success('Indexed image saved')
             
-        if st.button('Save Mask'):
-            im = Image.fromarray(masked_img)
-            file_path = os.path.join(save_folder, f'Indexed Image.jpg')
-            pil_image.save(file_path)
-            st.success('Indexed image saved')
-        if st.button('Save Plot'):
-            fig.savefig(f'{save_folder}/figure.png')
-            st.success('Plot saved')
+#         if st.button('Save Mask'):
+#             im = Image.fromarray(masked_img)
+#             file_path = os.path.join(save_folder, f'Indexed Image.jpg')
+#             pil_image.save(file_path)
+#             st.success('Indexed image saved')
+#         if st.button('Save Plot'):
+#             fig.savefig(f'{save_folder}/figure.png')
+#             st.success('Plot saved')
