@@ -82,7 +82,7 @@ if app_mode == 'About App':
 
  
     st.markdown('''
-                ## About the app 
+                # About the app 
 
                 Welcome to the GRVI Index and Mask Generator!
 
@@ -98,6 +98,7 @@ We hope you find this app useful for your image processing needs. If you have an
 
 
                 ''') 
+
 # Run image
 if app_mode == 'GRVI an Image':
     
@@ -145,12 +146,14 @@ if app_mode == 'GRVI an Image':
         
 
         # Show the indexed image, mask, and original image side by side
-        show_index(image, index)
+        #show_index(image, index)
         st.pyplot()
         
-        
-        st.subheader('Masked Image')
-        st.image(masked_img, use_column_width=True)
+        st.columns(2)
+        st.image(image, caption='Original image', use_column_width=True, column=0)
+        st.image(index, caption='Indexed Image', use_column_width=True, column=1)
+       
+        st.image(masked_img, caption='Masked Image', use_column_width=True)
         
         # Allow the user to choose a destination folder for the saved images
         save_folder = st.folder_selector('Save images to:', default='.')
