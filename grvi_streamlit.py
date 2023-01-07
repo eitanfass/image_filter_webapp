@@ -80,10 +80,7 @@ if app_mode == 'About App':
 
     )
 
-    # add a video to the page
-    st.video('https://www.youtube.com/watch?v=6CqRnx6Ic48')
-
-
+ 
     st.markdown('''
                 ## About the app \n
                 Welcome to the GRVI Index and Mask Generator!\n
@@ -126,40 +123,40 @@ if app_mode == 'GRVI an Image':
 
 
 
-  # Allow the user to upload an image
-  uploaded_image =st.sidebar.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
+    # Allow the user to upload an image
+    uploaded_image =st.sidebar.file_uploader("Upload an image", type=['jpg', 'jpeg', 'png'])
 
-  if uploaded_image is not None:
-      # Read the image and convert to a NumPy array
-      image = Image.open(uploaded_image)
-      # Calculate the GRVI index
-      _, index = GRVI(image)
+    if uploaded_image is not None:
+        # Read the image and convert to a NumPy array
+        image = Image.open(uploaded_image)
+        # Calculate the GRVI index
+        _, index = GRVI(image)
 
-      # Create a binary mask from the index using the mean value as the threshold
-      mask = index.copy()
-      mask[mask > index.mean()] = 1
-      mask[mask <= index.mean()] = 0
+        # Create a binary mask from the index using the mean value as the threshold
+        mask = index.copy()
+        mask[mask > index.mean()] = 1
+        mask[mask <= index.mean()] = 0
 
-      # Show the indexed image, mask, and original image side by side
-      show_index(image, index, mask)
-      st.pyplot()
+        # Show the indexed image, mask, and original image side by side
+        show_index(image, index, mask)
+        st.pyplot()
 
-      # Allow the user to choose a destination folder for the saved images
-      save_folder = st.folder_selector('Save images to:', default='.')
+        # Allow the user to choose a destination folder for the saved images
+        save_folder = st.folder_selector('Save images to:', default='.')
 
-      # Save the indexed image, mask, and plot to the chosen folder
-      if st.button('Save Indexed Image'):
-          im = Image.fromarray(index)
-          im.save(os.path.join(save_folder, 'indexed_image.jpg'))
-          st.success('Indexed image saved')
-          
-      # Allow the user to save the indexed image, mask, and plot
-      if st.button('Save Indexed Image'):
-          st.image(index, width=300)
-          st.success('Indexed image saved')
-      if st.button('Save Mask'):
-          st.image(mask, width=300)
-          st.success('Mask saved')
-      if st.button('Save Plot'):
-          st.pyplot(width=600, height=600)
-          st.success('Plot saved')
+        # Save the indexed image, mask, and plot to the chosen folder
+        if st.button('Save Indexed Image'):
+            im = Image.fromarray(index)
+            im.save(os.path.join(save_folder, 'indexed_image.jpg'))
+            st.success('Indexed image saved')
+            
+        # Allow the user to save the indexed image, mask, and plot
+        if st.button('Save Indexed Image'):
+            st.image(index, width=300)
+            st.success('Indexed image saved')
+        if st.button('Save Mask'):
+            st.image(mask, width=300)
+            st.success('Mask saved')
+        if st.button('Save Plot'):
+            st.pyplot(width=600, height=600)
+            st.success('Plot saved')
