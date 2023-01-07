@@ -163,19 +163,19 @@ if app_mode == 'GRVI an Image':
 #         colorbar_ax = divider.append_axes("right", size="5%", pad=0.05)  
 #         plt.colorbar(im2, cax=colorbar_ax);
 
-          # Display the original RGB image
-          st.subheader('Original RGB')
-          st.image(img, width=300)
+        # Display the original RGB image
+        st.subheader('Original RGB')
+        st.image(img, width=300)
 
-          # Display the index image
-          st.subheader(f'GRVI index, mean={np.nanmean(index):.3f}')
-          cmap = matplotlib.cm.get_cmap('Spectral_r', 10)
+        # Display the index image
+        st.subheader(f'GRVI index, mean={np.nanmean(index):.3f}')
+        cmap = matplotlib.cm.get_cmap('Spectral_r', 10)
 
-          # Use a temporary buffer to display the index image with the color map
-          buf = io.BytesIO()
-          plt.imsave(buf, index*255, cmap=cmap)
-          buf.seek(0)
-          st.image(buf, width=300)
+        # Use a temporary buffer to display the index image with the color map
+        buf = io.BytesIO()
+        plt.imsave(buf, index*255, cmap=cmap)
+        buf.seek(0)
+        st.image(buf, width=300)
 
 
         # Show the indexed image, mask, and original image side by side
